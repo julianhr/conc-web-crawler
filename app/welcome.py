@@ -1,7 +1,7 @@
 import sys
 from .blocking.requester import requester
-from .async_.scraper import Scraper as ScraperAsync
-from .blocking.scraper import Scraper as ScraperBlocking
+from .async_.crawler import Crawler as CrawlerAsync
+from .blocking.crawler import Crawler as CrawlerBlocking
 
 
 class Welcome:
@@ -13,11 +13,11 @@ class Welcome:
 
     @property
     def title(self):
-        print('Web Scraper\n')
+        print('Simple Web Crawler\n')
 
     def set_url(self):
         while True:
-            url = input('URL to scrape> ').strip()
+            url = input('URL to crawl> ').strip()
 
             if self.debug:
                 self.scraper_args['init_url'] = url
@@ -42,7 +42,7 @@ class Welcome:
 
     def get_strategy(self):
         strategies = ' '.join([ f"\n{i+1} {s}" for i, s in enumerate(self.strategies) ])
-        print(f"scraper strategy:{strategies}")
+        print(f"crawler strategy:{strategies}")
 
         while True:
             try:
@@ -58,11 +58,11 @@ class Welcome:
     def threads_factory(self):
         self.set_num_threads()
         self.set_time()
-        return ScraperBlocking(**self.scraper_args)
+        return CrawlerBlocking(**self.scraper_args)
 
     def async_factory(self):
         self.set_time()
-        return ScraperAsync(**self.scraper_args)
+        return CrawlerAsync(**self.scraper_args)
 
     def set_num_threads(self):
         while True:

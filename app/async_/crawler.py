@@ -15,7 +15,7 @@ NAP = 0.5
 log_main = logging.getLogger('main')
 log_enqueued_urls = logging.getLogger('enqueued_urls')
 
-class Scraper:
+class Crawler:
 
     def __init__(self, init_url, run_for_sec=None):
         self.init_url = init_url
@@ -36,7 +36,7 @@ class Scraper:
 
         try:
             browser = await launch()
-            log_main.info(f'Scraper started, initial URL: {self.init_url}')
+            log_main.info(f'Crawler started, initial URL: {self.init_url}')
             self.start_ts = time.time()
             await q.put(self.init_url)
 
