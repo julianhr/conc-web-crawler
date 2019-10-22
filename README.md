@@ -1,6 +1,10 @@
-### Simple Web Scraper
+## Simple Web Scraper
 
-Simple Python web scraper that provides the option to scrape URL's using either threads or asynchronous (async) code.
+Simple Python web scraper with option to use threads or event loop to fetch URL's.
+
+### URL Requests
+
+The threaded version uses the requests package. The async version uses Puppeteer via the Pyppeteer port to Python.
 
 ```zsh
 (web_scraper) ➜  web_scraper git:(master) ✗ python main.py
