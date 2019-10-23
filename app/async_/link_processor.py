@@ -15,7 +15,6 @@ class LinkProcessor:
     INVALID_HREFS = { '', '#', '/' }
 
     def __init__(self, href, source_url):
-        loop = aio.get_running_loop()
         self.href = href
         self.source_url = source_url
         self.parse_result = None

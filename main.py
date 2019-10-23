@@ -10,8 +10,8 @@ def main():
     welcome = Welcome(debug=True)
     welcome.interactive()
 
-    scraper = welcome.scraper
-    scraper.run()
+    crawler = welcome.crawler
+    crawler.run()
 
 
 if __name__ == "__main__":

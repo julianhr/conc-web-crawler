@@ -8,7 +8,8 @@ class Welcome:
 
     def __init__(self, debug=False):
         self.strategies = ['Threads', 'Async']
-        self.scraper_args = {}
+        self.crawler_args = {}
+        self.crawler = None
         self.debug = debug
 
     @property
@@ -20,7 +21,7 @@ class Welcome:
             url = input('URL to crawl> ').strip()
 
             if self.debug:
-                self.scraper_args['init_url'] = url
+                self.crawler_args['init_url'] = url
                 break
             else:
                 print('checking validity, wait...\n')
@@ -32,7 +33,7 @@ class Welcome:
                     res = requester.head(url)
 
                     if res.ok:
-                        self.scraper_args['init_url'] = url
+                        self.crawler_args['init_url'] = url
                         break
                     else:
                         sys.exit(f"the URL {url} appears to be invald, try again.")
@@ -58,11 +59,11 @@ class Welcome:
     def threads_factory(self):
         self.set_num_threads()
         self.set_time()
-        return CrawlerBlocking(**self.scraper_args)
+        return CrawlerBlocking(**self.crawler_args)
 
     def async_factory(self):
         self.set_time()
-        return CrawlerAsync(**self.scraper_args)
+        return CrawlerAsync(**self.crawler_args)
 
     def set_num_threads(self):
         while True:
@@ -70,7 +71,7 @@ class Welcome:
                 num_threads = int(input('number of threads> '))
 
                 if num_threads > 0:
-                    self.scraper_args['num_threads'] = num_threads
+                    self.crawler_args['num_threads'] = num_threads
                     break
                 else:
                     raise ValueError()
@@ -84,7 +85,7 @@ class Welcome:
                 run_for_min = input('run for seconds (blank if forever)> ')
 
                 if run_for_min:
-                    self.scraper_args['run_for_sec'] = int(run_for_min)
+                    self.crawler_args['run_for_sec'] = int(run_for_min)
 
                 break
             except:
@@ -96,8 +97,8 @@ class Welcome:
         strategy = self.get_strategy()
 
         if strategy == 1:
-            self.scraper = self.threads_factory()
+            self.crawler = self.threads_factory()
         elif strategy == 2:
-            self.scraper = self.async_factory()
+            self.crawler = self.async_factory()
 
         print()
