@@ -62,6 +62,7 @@ class Welcome:
         return CrawlerBlocking(**self.crawler_args)
 
     def async_factory(self):
+        self.set_num_consumers()
         self.set_time()
         return CrawlerAsync(**self.crawler_args)
 
@@ -72,6 +73,20 @@ class Welcome:
 
                 if num_threads > 0:
                     self.crawler_args['num_threads'] = num_threads
+                    break
+                else:
+                    raise ValueError()
+            except Exception as err:
+                print(err)
+                print('threads must be a number greater than 0.')
+
+    def set_num_consumers(self):
+        while True:
+            try:
+                num_consumers = int(input('number of consumers> '))
+
+                if num_consumers > 0:
+                    self.crawler_args['num_consumers'] = num_consumers
                     break
                 else:
                     raise ValueError()

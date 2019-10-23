@@ -13,7 +13,7 @@ log_enqueued_urls = logging.getLogger('enqueued_urls')
 class Scraper:
 
     def __init__(self, scraper_id, run_for_sec):
-        self.id = f"[scraper-{scraper_id}]"
+        self.id = f"[cons-{scraper_id}]"
         self.run_for_sec = run_for_sec
         self.is_working = True
         self.start_ts = None

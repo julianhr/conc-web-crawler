@@ -15,8 +15,9 @@ log_main = logging.getLogger('main')
 
 class Crawler:
 
-    def __init__(self, init_url, run_for_sec=None):
+    def __init__(self, init_url, num_consumers, run_for_sec=None):
         self.init_url = init_url
+        self.num_consumers = num_consumers
         self.run_for_sec = run_for_sec
 
     def run(self):
@@ -29,7 +30,8 @@ class Crawler:
         log_main.info(f"Crawler started, initial URL: {self.init_url}")
 
         try:
-            scrapers = [ aio.create_task(self.consumer(i+1)) for i in range(3) ]
+            scrapers = [ aio.create_task(self.consumer(i+1))
+                        for i in range(self.num_consumers) ]
             await aio.gather(*scrapers)
         except Exception as err:
             log_main.exception(err)

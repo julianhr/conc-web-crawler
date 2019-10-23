@@ -17,26 +17,23 @@ class Requester:
         self.session = None
 
     async def start(self):
-        pass
-        # self.session = aiohttp.ClientSession(headers=HEADERS)
+        self.session = aiohttp.ClientSession(headers=HEADERS)
 
     async def close(self):
-        pass
-        # await self.session.close()
+        await self.session.close()
 
     async def _request(self, url, verb):
         res = SimpleNamespace(status=500)
 
         for backoff in BACKOFFS:
-            # req = getattr(self.session, verb)
+            req = getattr(self.session, verb)
 
             try:
-                async with aiohttp.ClientSession(headers=HEADERS) as session:
-                    async with session.get(url) as res:
-                        if res.status < 400:
-                            return res
-                        else:
-                            logger_main.warn(res.text())
+                async with self.session.get(url) as res:
+                    if res.status < 400:
+                        return res
+                    else:
+                        logger_main.warn(res.text())
             except Exception as err:
                 logger_main.exception(err)
                 await aio.sleep(backoff)
